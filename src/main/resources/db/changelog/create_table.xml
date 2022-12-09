@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!-- Refer to https://docs.liquibase.com/change-types/community/create-table.html -->
+
+    <changeSet id="33d4e9bc-7210-47c3-9617-c56ab7c0750d" author="juan_esteban.caicedo" failOnError="true" >
+        <createTable tableName="table">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="integer" type="numeric"/>
+            <column name="boolean" type="boolean"/>
+            <column name="country" type="varchar(255)"/>
+            <column name="color" type="varchar(255)"/>
+        </createTable>
+        <insert tableName="table">
+            <column name="id" value="9db26d90-ff5c-477d-bc4b-95cae0363a71"/>
+            <column name="integer" value="53"/>
+            <column name="boolean" value="false"/>
+            <column name="country" value="Colombia"/>
+            <column name="color" value="Yellow"/>
+        </insert>
+        <insert tableName="table">
+            <column name="id" value="b4679733-a675-4405-a0af-9441037a1262"/>
+            <column name="integer" value="36"/>
+            <column name="boolean" value="true"/>
+            <column name="country" value="Mexico"/>
+            <column name="color" value="Blue"/>
+        </insert>
+        <insert tableName="table">
+            <column name="id" value="e6fadcd9-d9f1-4189-b9b0-1bcb2ca2f9b9"/>
+            <column name="integer" value="46"/>
+            <column name="boolean" value="false"/>
+            <column name="country" value="Uruguay"/>
+            <column name="color" value="Red"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
