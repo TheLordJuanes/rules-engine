@@ -8,6 +8,6 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Table {
-    private List<Row> table;
+public class Row {
+    private List<RowCell> row;
 }

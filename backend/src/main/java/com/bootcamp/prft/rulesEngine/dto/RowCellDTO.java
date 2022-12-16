@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TableDTO {
-    private List<RowDTO> table;
+public class RowCellDTO<T> {
+    private T value;
+    private String cellName;
 }

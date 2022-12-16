@@ -9,6 +9,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TableDTO {
-    private List<RowDTO> table;
+public class RowDTO {
+    private List<RowCellDTO> row;
 }
