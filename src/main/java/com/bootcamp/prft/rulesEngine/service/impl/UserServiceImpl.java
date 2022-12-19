@@ -26,11 +26,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByEmailOrPhoneNumber(String param) {
-        return userRepository.findByEmail(param).orElse(userRepository.findByPhoneNumber(param).orElse(null));
-    }
-
-    @Override
     public User createUser(User user) {
         validateUserExists(user.getEmail(), user.getPhoneNumber());
         return userRepository.save(user);

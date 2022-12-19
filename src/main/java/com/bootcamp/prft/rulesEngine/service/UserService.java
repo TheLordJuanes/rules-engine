@@ -9,7 +9,6 @@ import java.util.UUID;
 public interface UserService {
 
     User getUser(@PathVariable UUID userId);
-    User getUserByEmailOrPhoneNumber(@PathVariable String email);
     User createUser(@RequestBody User user);
     List<User> getUsers();
 }
