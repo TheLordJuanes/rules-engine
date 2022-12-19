@@ -6,6 +6,7 @@ import com.bootcamp.prft.rulesEngine.dto.RuleDTO;
 import com.bootcamp.prft.rulesEngine.dto.TableDTO;
 import com.bootcamp.prft.rulesEngine.dto.TableSimplifiedDTO;
 import com.bootcamp.prft.rulesEngine.mapper.RowMapper;
+import com.bootcamp.prft.rulesEngine.mapper.RuleMapper;
 import com.bootcamp.prft.rulesEngine.mapper.TableMapper;
 import com.bootcamp.prft.rulesEngine.mapper.TableSimplifiedMapperDTO;
 import com.bootcamp.prft.rulesEngine.service.TableService;
@@ -22,9 +23,11 @@ public class TableController implements TableAPI {
     private final RowMapper rowMapper;
     private final TableSimplifiedMapperDTO tableSimplifiedMapperDTO;
 
+    private final RuleMapper ruleMapper;
+
     @Override
     public TableDTO getRowsByRule(RuleDTO ruleDTO) {
-        return tableMapper.fromTable(tableService.getRowsByRule(ruleDTO.getTableName()));
+        return tableMapper.fromTable(tableService.getRowsByRule(ruleMapper.fromDTO(ruleDTO)));
     }
 
     @Override

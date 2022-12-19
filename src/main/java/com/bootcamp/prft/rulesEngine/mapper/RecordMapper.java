@@ -13,13 +13,13 @@ import java.util.Dictionary;
 import java.util.List;
 
 @AllArgsConstructor
-public class RecordMapper implements RowMapper {
+public class RecordMapper implements RowMapper<Row> {
 
     private List<ColumnInformation> columnInformations;
     private final Dictionary<String, TypeData> dictionary;
 
     @Override
-    public Object mapRow(ResultSet resultSet, int i) throws SQLException {
+    public Row mapRow(ResultSet resultSet, int i) throws SQLException {
         List<RowCell> cells = new ArrayList<>();
         for(ColumnInformation columnInformation : columnInformations) {
             String dataTypeDB = columnInformation.getDataType();

@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @AllArgsConstructor
-public class UserException extends RuntimeException {
+public class RuleException extends RuntimeException{
     private HttpStatus httpStatus;
-    private UserError error;
+    private RuleError error;
 }

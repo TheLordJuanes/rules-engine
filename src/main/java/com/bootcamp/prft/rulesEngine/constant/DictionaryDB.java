@@ -7,15 +7,16 @@ import java.util.Hashtable;
 @Getter
 public class DictionaryDB {
 
-    private final Dictionary<String, TypeData> postgresDictionay;
+    private final Dictionary<String, TypeData> postgresqlDictionary;
     public DictionaryDB() {
-        this.postgresDictionay = createPostgresDictionary();
+        this.postgresqlDictionary = createPostgresqlDictionary();
     }
 
-    private Dictionary<String, TypeData> createPostgresDictionary() {
+    private Dictionary<String, TypeData> createPostgresqlDictionary() {
         Dictionary<String, TypeData> dictionary = new Hashtable<>();
         dictionary.put("bigint", TypeData.Integer);
         dictionary.put("bigserial", TypeData.Integer);
+        dictionary.put("numeric", TypeData.Integer);
         dictionary.put("boolean", TypeData.Boolean);
         dictionary.put("bool", TypeData.Boolean);
         dictionary.put("character", TypeData.String);

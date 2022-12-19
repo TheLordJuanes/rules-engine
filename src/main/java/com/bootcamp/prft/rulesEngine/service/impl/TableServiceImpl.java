@@ -3,10 +3,11 @@ package com.bootcamp.prft.rulesEngine.service.impl;
 import com.bootcamp.prft.rulesEngine.constant.DictionaryDB;
 import com.bootcamp.prft.rulesEngine.constant.TypeData;
 import com.bootcamp.prft.rulesEngine.model.Row;
+import com.bootcamp.prft.rulesEngine.model.Rule;
 import com.bootcamp.prft.rulesEngine.model.Table;
 import com.bootcamp.prft.rulesEngine.model.TableSimplified;
 import com.bootcamp.prft.rulesEngine.repository.TableRepository;
-import com.bootcamp.prft.rulesEngine.repository.impl.TableRepositoryPostgresImpl;
+import com.bootcamp.prft.rulesEngine.repository.impl.TableRepositoryPostgresqlImpl;
 import com.bootcamp.prft.rulesEngine.service.TableService;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -28,15 +29,15 @@ public class TableServiceImpl implements TableService {
         tableRepository = null;
         switch (CURRENT_DATA_BASE) {
             case "postgresql":
-                dictionary = tempDictionaries.getPostgresDictionay();
-                tableRepository = new TableRepositoryPostgresImpl(jdbcTemplate, dictionary);
+                dictionary = tempDictionaries.getPostgresqlDictionary();
+                tableRepository = new TableRepositoryPostgresqlImpl(jdbcTemplate, dictionary);
                 break;
         }
     }
 
     @Override
-    public Table getRowsByRule(String tableName) {
-        return tableRepository.getRowsByRule(tableName);
+    public Table getRowsByRule(Rule rule) {
+        return tableRepository.getRowsByRule(rule);
     }
 
     @Override

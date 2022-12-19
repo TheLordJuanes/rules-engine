@@ -8,6 +8,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Row {
-
     private List<RowCell> row;
 }
