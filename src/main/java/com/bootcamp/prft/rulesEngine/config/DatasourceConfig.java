@@ -13,14 +13,14 @@ import javax.sql.DataSource;
 
 @Configuration
 public class DatasourceConfig {
-    @Bean
+    @Bean(name = "liquibase")
     public SpringLiquibase liquibase(DataSource dataSource) {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setChangeLog("classpath:db/changelog/master.xml");
         liquibase.setDataSource(dataSource);
         return liquibase;
     }
-    @Bean
+    @Bean(name = "jdbcTemplate")
     public JdbcTemplate jdbcTemplate(DataSource dataSource){
         return new JdbcTemplate(dataSource);
     }

@@ -20,14 +20,15 @@ import javax.sql.DataSource;
 @Configuration
 public class InitialDataConfig {
 
-    @Autowired
-    public void configureInitialData(DataSource dataSource, SpringLiquibase liquibase) {
-        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
-        resourceDatabasePopulator.addScript(new ClassPathResource("/testData.sql"));
-        DatabasePopulatorUtils.execute(resourceDatabasePopulator, dataSource);
+    @Bean(name = "liquibaseTest")
+    public SpringLiquibase liquibase(DataSource dataSource) {
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setChangeLog("classpath:db/changelog/master_test.xml");
+        liquibase.setDataSource(dataSource);
+        return liquibase;
     }
 
-    @Autowired
+    @Bean(name = "jdbcTemplateTest")
     public JdbcTemplate jdbcTemplate(DataSource dataSource){
         return new JdbcTemplate(dataSource);
     }
