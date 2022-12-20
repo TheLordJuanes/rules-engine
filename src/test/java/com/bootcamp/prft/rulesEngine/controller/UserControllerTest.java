@@ -72,5 +72,6 @@ public class UserControllerTest {
     public void testControllerCreateUser() {
         when(userMapper.fromUser(any())).thenReturn(new UserDTO(UUID.randomUUID(), "sam.4m225y4321@icesi.edu.co", "S@mmy1234", "+571231230123", "John", "Doe"));
         assertNotNull(userController.createUser(new UserDTO(null, "sam.4m225y4321@icesi.edu.co", "S@mmy1234", "+571231230123", "John", "Doe")));
+        verify(userService, times(1)).createUser(any());
     }
 }
