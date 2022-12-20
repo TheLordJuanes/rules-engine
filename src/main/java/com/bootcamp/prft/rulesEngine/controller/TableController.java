@@ -22,7 +22,6 @@ public class TableController implements TableAPI {
     private final TableMapper tableMapper;
     private final RowMapper rowMapper;
     private final TableSimplifiedMapperDTO tableSimplifiedMapperDTO;
-
     private final RuleMapper ruleMapper;
 
     @Override
@@ -31,8 +30,8 @@ public class TableController implements TableAPI {
     }
 
     @Override
-    public void addRow(RowDTO rowDTO, String tableName) {
-        tableService.addRow(rowMapper.fromDTO(rowDTO), tableName);
+    public void addRow(RowDTO rowDTO, TableSimplifiedDTO tableSimplifiedDTO) {
+        tableService.addRow(rowMapper.fromDTO(rowDTO), tableSimplifiedDTO.getTableName());
     }
 
     @Override

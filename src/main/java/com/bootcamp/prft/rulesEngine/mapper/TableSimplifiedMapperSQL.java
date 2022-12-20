@@ -10,7 +10,7 @@ public class TableSimplifiedMapperSQL implements RowMapper<TableSimplified>{
     @Override
     public TableSimplified mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new TableSimplified(
-                rs.getString("tablename")
+                rs.getString("table_name")
         );
     }
 }

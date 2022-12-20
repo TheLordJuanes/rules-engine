@@ -1,6 +1,7 @@
 package com.bootcamp.prft.rulesEngine.config;
 
 import com.zaxxer.hikari.HikariDataSource;
+import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -8,21 +9,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.sql.DataSource;
+
 @Configuration
 public class DatasourceConfig {
-
     @Bean
-    @Primary
-    @ConfigurationProperties("app.datasource.main")
-    public HikariDataSource hikariDataSource() {
-        return DataSourceBuilder
-                .create()
-                .type(HikariDataSource.class)
-                .build();
+    public SpringLiquibase liquibase(DataSource dataSource) {
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setChangeLog("classpath:db/changelog/master.xml");
+        liquibase.setDataSource(dataSource);
+        return liquibase;
     }
-
     @Bean
-    public JdbcTemplate jdbcTemplate(HikariDataSource hikariDataSource){
-        return new JdbcTemplate(hikariDataSource);
+    public JdbcTemplate jdbcTemplate(DataSource dataSource){
+        return new JdbcTemplate(dataSource);
     }
 }

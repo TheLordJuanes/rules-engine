@@ -169,7 +169,7 @@ public class TableRepositoryPostgresqlImpl implements TableRepository {
 
     @Override
     public List<TableSimplified> getTablesOfDataBase() {
-        String sql = "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname = 'public'";
+        String sql = "SELECT tablename as table_name FROM pg_catalog.pg_tables WHERE schemaname = 'public'";
         List<TableSimplified> tablesSimplified = jdbcTemplate.query(sql, new TableSimplifiedMapperSQL());
         deleteFlyWayTable(tablesSimplified);
         return tablesSimplified;

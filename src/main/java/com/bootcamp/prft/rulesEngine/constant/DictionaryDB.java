@@ -14,16 +14,21 @@ public class DictionaryDB {
 
     private Dictionary<String, TypeData> createPostgresqlDictionary() {
         Dictionary<String, TypeData> dictionary = new Hashtable<>();
+
         dictionary.put("bigint", TypeData.Integer);
         dictionary.put("bigserial", TypeData.Integer);
         dictionary.put("numeric", TypeData.Integer);
+        dictionary.put("integer", TypeData.Integer);
         dictionary.put("boolean", TypeData.Boolean);
         dictionary.put("bool", TypeData.Boolean);
         dictionary.put("character", TypeData.String);
         dictionary.put("character varying", TypeData.String);
-        dictionary.put("integer", TypeData.Integer);
+        dictionary.put("timestamp", TypeData.String);
         dictionary.put("date", TypeData.String);
         dictionary.put("text", TypeData.String);
+        dictionary.put("uuid", TypeData.String);
+        dictionary.put("double precision", TypeData.Double);
+
         return dictionary;
     }
 }
