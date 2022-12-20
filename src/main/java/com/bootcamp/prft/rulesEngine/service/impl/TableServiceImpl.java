@@ -9,6 +9,8 @@ import com.bootcamp.prft.rulesEngine.model.TableSimplified;
 import com.bootcamp.prft.rulesEngine.repository.TableRepository;
 import com.bootcamp.prft.rulesEngine.repository.impl.TableRepositoryPostgresqlImpl;
 import com.bootcamp.prft.rulesEngine.service.TableService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import java.util.Dictionary;
@@ -18,6 +20,7 @@ import java.util.List;
 public class TableServiceImpl implements TableService {
 
     private final String CURRENT_DATA_BASE = "postgresql";
+    @Qualifier("jdbcTemplate")
     private final JdbcTemplate jdbcTemplate;
     private TableRepository tableRepository;
     private Dictionary<String, TypeData> dictionary;

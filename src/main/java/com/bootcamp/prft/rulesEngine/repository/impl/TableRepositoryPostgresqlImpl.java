@@ -10,6 +10,7 @@ import com.bootcamp.prft.rulesEngine.mapper.TableSimplifiedMapperSQL;
 import com.bootcamp.prft.rulesEngine.model.*;
 import com.bootcamp.prft.rulesEngine.repository.TableRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.Dictionary;
@@ -18,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class TableRepositoryPostgresqlImpl implements TableRepository {
 
+    @Qualifier("jdbcTemplate")
     private final JdbcTemplate jdbcTemplate;
     private Dictionary<String, TypeData> dictionary;
 
