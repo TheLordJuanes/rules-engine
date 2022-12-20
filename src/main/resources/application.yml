@@ -2,7 +2,7 @@ app:
   datasource:
     main:
       driver-class-name: org.postgresql.Driver
-      jdbc-url: jdbc:postgresql://localhost:55000/springjdbc
+      jdbc-url: jdbc:postgresql://localhost:49153/springjdbc
       username: postgres
       password: postgrespw
       pool-size: 30

@@ -8,11 +8,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Expression {
-
-    @JsonProperty("number")
     private int number;
-
-    @JsonProperty("comparison")
-    @JsonAlias({"value", "column"})
     private Comparison comparison;
 }

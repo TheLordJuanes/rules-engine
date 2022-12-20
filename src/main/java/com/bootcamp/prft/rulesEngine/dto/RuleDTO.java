@@ -13,6 +13,6 @@ public class RuleDTO {
 
     private String tableName;
     private String encoded;
-    private List<Expression> expressions;
+    private List<ExpressionDTO> expressions;
     private String decoded;
 }
