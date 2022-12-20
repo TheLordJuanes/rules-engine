@@ -52,13 +52,14 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String TOKEN_PREFIX = "Bearer ";
     private static final String USER_ID_CLAIM_NAME = "userId";
-    private static final String[] excludedPaths = {"POST /signIn", "GET /signIn", "GET /login", "GET /signUp", "POST /users", "GET /logout", "POST /api/v1/table", "GET /api/v1/table"};
+
+    private static final String[] excludedPaths = {"POST /signIn", "GET /signIn", "GET /login", "POST /login", "GET /signUp", "POST /users", "GET /logout", "POST /api/v1/table", "GET /api/v1/table"};
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         try {
             if (containsToken(request)) {
-                String jwtToken = ((String) request.getSession().getAttribute(AUTHORIZATION_HEADER)).replace(TOKEN_PREFIX, StringUtils.EMPTY);
+                String jwtToken = request.getHeader(AUTHORIZATION_HEADER).replace(TOKEN_PREFIX, StringUtils.EMPTY);
                 Claims claims = JWTParser.decodeJWT(jwtToken);
                 SecurityContext context = parseClaims(jwtToken, claims);
                 SecurityContextHolder.setUserContext(context);
@@ -68,7 +69,6 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
         } catch (JwtException e) {
             createUnauthorizedFilter(new UserException(HttpStatus.UNAUTHORIZED, new UserError(UserErrorCode.CODE_07, UserErrorCode.CODE_07.getMessage())), response);
         } finally {
-            request.removeAttribute("LoggedUser");
             SecurityContextHolder.clearContext();
         }
     }
@@ -108,7 +108,7 @@ public class JWTAuthorizationTokenFilter extends OncePerRequestFilter {
     }
 
     private boolean containsToken(HttpServletRequest request) {
-        String authenticationHeader = (String) request.getSession().getAttribute(AUTHORIZATION_HEADER);
+        String authenticationHeader = request.getHeader(AUTHORIZATION_HEADER);
         return authenticationHeader != null && authenticationHeader.startsWith(TOKEN_PREFIX);
     }
 }
