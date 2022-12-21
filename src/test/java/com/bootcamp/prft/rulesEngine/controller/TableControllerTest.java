@@ -55,9 +55,9 @@ public class TableControllerTest {
         List<ExpressionDTO> expressionDTOS = new ArrayList<>();
         List<Expression> expressions = new ArrayList<>();
         expressionDTOS.add(new ExpressionDTO(1, new ComparisonDTO("value", "in_cinema", "true", "=")));
-        expressions.add(new Expression(1, new Comparison("value", "in_cinema", "true", "=")));
+        expressions.add(new Expression(null,1, new Comparison(null,"value", "in_cinema", "true", "=")));
         RuleDTO ruleDTO = new RuleDTO("movie", "1", expressionDTOS, "in_cinema igual que true");
-        Rule rule = new Rule("movie", "1", expressions, "in_cinema igual que true");
+        Rule rule = new Rule(null, "movie", "1", expressions, "in_cinema igual que true");
 
         when(tableMapper.fromTable(any())).thenReturn(new TableDTO(rowsDTO));
         when(ruleMapper.fromDTO(any())).thenReturn(rule);
