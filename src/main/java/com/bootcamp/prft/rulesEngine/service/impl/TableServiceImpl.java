@@ -2,10 +2,7 @@ package com.bootcamp.prft.rulesEngine.service.impl;
 
 import com.bootcamp.prft.rulesEngine.constant.DictionaryDB;
 import com.bootcamp.prft.rulesEngine.constant.TypeData;
-import com.bootcamp.prft.rulesEngine.model.Row;
-import com.bootcamp.prft.rulesEngine.model.Rule;
-import com.bootcamp.prft.rulesEngine.model.Table;
-import com.bootcamp.prft.rulesEngine.model.TableSimplified;
+import com.bootcamp.prft.rulesEngine.model.*;
 import com.bootcamp.prft.rulesEngine.repository.TableRepository;
 import com.bootcamp.prft.rulesEngine.repository.impl.TableRepositoryPostgresqlImpl;
 import com.bootcamp.prft.rulesEngine.service.TableService;
@@ -51,5 +48,10 @@ public class TableServiceImpl implements TableService {
     @Override
     public List<TableSimplified> getTables() {
         return tableRepository.getTablesOfDataBase();
+    }
+
+    @Override
+    public List<ColumnInformation> getColumns(String tableName) {
+        return tableRepository.getInfoOfTableColumns(tableName);
     }
 }

@@ -28,7 +28,7 @@ public class LoginServiceImpl implements LoginService {
         if (user.getPassword().equals(loginDTO.getPassword())) {
             Map<String, String> claims = new HashMap<>();
             claims.put("userId", user.getId().toString());
-            return new TokenDTO(JWTParser.createJWT(user.getId().toString(), user.getEmail(), user.getEmail(), claims,300000L));
+            return new TokenDTO(JWTParser.createJWT(user.getId().toString(), user.getEmail(), user.getEmail(), claims,3000000000000000000L));
         }
         throw new UserException(HttpStatus.BAD_REQUEST, new UserError(UserErrorCode.CODE_03, UserErrorCode.CODE_03.getMessage()));
     }

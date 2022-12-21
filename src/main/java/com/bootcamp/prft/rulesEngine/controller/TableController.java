@@ -1,14 +1,8 @@
 package com.bootcamp.prft.rulesEngine.controller;
 
 import com.bootcamp.prft.rulesEngine.api.TableAPI;
-import com.bootcamp.prft.rulesEngine.dto.RowDTO;
-import com.bootcamp.prft.rulesEngine.dto.RuleDTO;
-import com.bootcamp.prft.rulesEngine.dto.TableDTO;
-import com.bootcamp.prft.rulesEngine.dto.TableSimplifiedDTO;
-import com.bootcamp.prft.rulesEngine.mapper.RowMapper;
-import com.bootcamp.prft.rulesEngine.mapper.RuleMapper;
-import com.bootcamp.prft.rulesEngine.mapper.TableMapper;
-import com.bootcamp.prft.rulesEngine.mapper.TableSimplifiedMapperDTO;
+import com.bootcamp.prft.rulesEngine.dto.*;
+import com.bootcamp.prft.rulesEngine.mapper.*;
 import com.bootcamp.prft.rulesEngine.service.TableService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +18,8 @@ public class TableController implements TableAPI {
     private final TableSimplifiedMapperDTO tableSimplifiedMapperDTO;
     private final RuleMapper ruleMapper;
 
+    private final ColumnInformationMapper columnInformationMapper;
+
     @Override
     public TableDTO getRowsByRule(RuleDTO ruleDTO) {
         return tableMapper.fromTable(tableService.getRowsByRule(ruleMapper.fromDTO(ruleDTO)));
@@ -37,5 +33,10 @@ public class TableController implements TableAPI {
     @Override
     public List<TableSimplifiedDTO> getTables() {
         return tableSimplifiedMapperDTO.fromTableSimplified(tableService.getTables());
+    }
+
+    @Override
+    public List<ColumnInformationDTO> getColumns(String tableName) {
+        return columnInformationMapper.fromColumnInformation(tableService.getColumns(tableName));
     }
 }
