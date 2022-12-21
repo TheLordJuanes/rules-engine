@@ -5,6 +5,7 @@ import com.bootcamp.prft.rulesEngine.dto.*;
 import com.bootcamp.prft.rulesEngine.mapper.*;
 import com.bootcamp.prft.rulesEngine.service.TableService;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 

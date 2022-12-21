@@ -47,6 +47,15 @@ public class TableRepositoryPostgresqlImpl implements TableRepository {
         return jdbcTemplate.query(sql, new ColumnInformationSimplifiedMapper(dictionary), tableName);
     }
 
+    public List<ColumnInformation> getOriginalInfoOfTableColumns(String tableName) {
+        tableName = tableName.toLowerCase();
+        if(criticalTables.contains(tableName)){
+            throw new RuleException(HttpStatus.UNAUTHORIZED, new RuleError(RuleErrorCode.CODE_05, RuleErrorCode.CODE_05.getMessage()));
+        }
+        String sql = " SELECT table_name, column_name, data_type FROM information_schema.columns WHERE table_name = ?";
+        return jdbcTemplate.query(sql, new ColumnInformationRowMapper(), tableName);
+    }
+
     @Override
     public Table getRowsByRule(Rule rule) {
         String[] expressions = new String[2];
@@ -55,7 +64,7 @@ public class TableRepositoryPostgresqlImpl implements TableRepository {
         String tableName = rule.getTableName().toLowerCase();
         convertRuleToPostgresql(expressions, rule, tableName);
         String sql = "SELECT * FROM " + tableName + " WHERE " + expressions[0];
-        List<ColumnInformation> columnsInformation = getInfoOfTableColumns(tableName);
+        List<ColumnInformation> columnsInformation = getOriginalInfoOfTableColumns(tableName);
         List<Row> rows = jdbcTemplate.query(sql, new RecordMapper(columnsInformation, dictionary));
         return new Table(rows);
     }
@@ -157,7 +166,7 @@ public class TableRepositoryPostgresqlImpl implements TableRepository {
         if(expression1 == null){
             throw new RuleException(HttpStatus.BAD_REQUEST, new RuleError(RuleErrorCode.CODE_01, RuleErrorCode.CODE_01.getMessage()));
         }
-        return expression1.getComparison().convertToSQL(getInfoOfTableColumns(tableName), dictionary);
+        return expression1.getComparison().convertToSQL(getOriginalInfoOfTableColumns(tableName), dictionary);
     }
 
     private Expression getExpressionByNumber(String number, Rule rule){
