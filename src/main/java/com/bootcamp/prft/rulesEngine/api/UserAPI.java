@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("/users")
+@RequestMapping("api/v1/users")
 public interface UserAPI {
 
     @GetMapping("/{userId}")
