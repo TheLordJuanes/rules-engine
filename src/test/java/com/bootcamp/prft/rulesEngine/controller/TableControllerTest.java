@@ -1,10 +1,7 @@
 package com.bootcamp.prft.rulesEngine.controller;
 
 import com.bootcamp.prft.rulesEngine.dto.*;
-import com.bootcamp.prft.rulesEngine.mapper.RowMapper;
-import com.bootcamp.prft.rulesEngine.mapper.RuleMapper;
-import com.bootcamp.prft.rulesEngine.mapper.TableMapper;
-import com.bootcamp.prft.rulesEngine.mapper.TableSimplifiedMapperDTO;
+import com.bootcamp.prft.rulesEngine.mapper.*;
 import com.bootcamp.prft.rulesEngine.model.*;
 import com.bootcamp.prft.rulesEngine.service.TableService;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +23,8 @@ public class TableControllerTest {
     private RuleMapper ruleMapper;
     private TableController tableController;
 
+    private ColumnInformationMapper columnInformationMapper;
+
     private List<RowDTO> rowsDTO;
 
     @BeforeEach
@@ -35,7 +34,8 @@ public class TableControllerTest {
         rowMapper = mock(RowMapper.class);
         tableSimplifiedMapperDTO = mock(TableSimplifiedMapperDTO.class);
         ruleMapper = mock(RuleMapper.class);
-        tableController = new TableController(tableService, tableMapper, rowMapper, tableSimplifiedMapperDTO, ruleMapper);
+        columnInformationMapper = mock(ColumnInformationMapper.class);
+        tableController = new TableController(tableService, tableMapper, rowMapper, tableSimplifiedMapperDTO, ruleMapper, columnInformationMapper);
     }
 
     public void stage1(){
@@ -96,4 +96,23 @@ public class TableControllerTest {
         tableController.getTables();
         verify(tableService, times(1)).getTables();
     }
+
+    public void testGetColumns(){
+        List<ColumnInformationDTO> columnInformationDTOList = new ArrayList<>();
+        columnInformationDTOList.add(new ColumnInformationDTO("movie_test", "id", "uuid"));
+        columnInformationDTOList.add(new ColumnInformationDTO("movie_test", "name", "text"));
+        columnInformationDTOList.add(new ColumnInformationDTO("movie_test", "year_publication", "numeric"));
+        columnInformationDTOList.add(new ColumnInformationDTO("movie_test", "description", "character varying"));
+        columnInformationDTOList.add(new ColumnInformationDTO("movie_test", "in_cinema", "character varying"));
+
+    }
+
+//    CREATE TABLE IF NOT EXISTS movie_test(
+//            id UUID PRIMARY KEY,
+//            name TEXT NOT NULL,
+//            year_publication NUMERIC NOT NULL,
+//            description VARCHAR(500) NOT NULL,
+//    in_Cinema boolean NOT NULL,
+//    unique (name)
+//);
 }

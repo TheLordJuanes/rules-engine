@@ -5,6 +5,7 @@ import com.bootcamp.prft.rulesEngine.constant.TypeData;
 import com.bootcamp.prft.rulesEngine.error.exception.RuleError;
 import com.bootcamp.prft.rulesEngine.error.exception.RuleException;
 import com.bootcamp.prft.rulesEngine.mapper.ColumnInformationRowMapper;
+import com.bootcamp.prft.rulesEngine.mapper.ColumnInformationSimplifiedMapper;
 import com.bootcamp.prft.rulesEngine.mapper.RecordMapper;
 import com.bootcamp.prft.rulesEngine.mapper.TableSimplifiedMapperSQL;
 import com.bootcamp.prft.rulesEngine.model.*;
@@ -13,20 +14,36 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 
-@AllArgsConstructor
+
 public class TableRepositoryPostgresqlImpl implements TableRepository {
 
     @Qualifier("jdbcTemplate")
     private final JdbcTemplate jdbcTemplate;
     private Dictionary<String, TypeData> dictionary;
 
+    private List<String> criticalTables;
+
+    public TableRepositoryPostgresqlImpl(JdbcTemplate jdbcTemplate, Dictionary<String, TypeData> dictionary){
+        this.jdbcTemplate = jdbcTemplate;
+        this.dictionary = dictionary;
+        criticalTables = new ArrayList<>();
+        criticalTables.add("databasechangelog");
+        criticalTables.add("databasechangeloglock");
+        criticalTables.add("users");
+    }
+
     @Override
     public List<ColumnInformation> getInfoOfTableColumns(String tableName) {
+        if(criticalTables.contains(tableName)){
+            throw new RuleException(HttpStatus.UNAUTHORIZED, new RuleError(RuleErrorCode.CODE_05, RuleErrorCode.CODE_05.getMessage()));
+        }
         String sql = " SELECT table_name, column_name, data_type FROM information_schema.columns WHERE table_name = ?";
-        return jdbcTemplate.query(sql, new ColumnInformationRowMapper(), tableName);
+        return jdbcTemplate.query(sql, new ColumnInformationSimplifiedMapper(dictionary), tableName);
     }
 
     @Override
@@ -173,15 +190,18 @@ public class TableRepositoryPostgresqlImpl implements TableRepository {
     public List<TableSimplified> getTablesOfDataBase() {
         String sql = "SELECT tablename as table_name FROM pg_catalog.pg_tables WHERE schemaname = 'public'";
         List<TableSimplified> tablesSimplified = jdbcTemplate.query(sql, new TableSimplifiedMapperSQL());
-        deleteFlyWayTable(tablesSimplified);
+        removeCriticalTables(tablesSimplified);
         return tablesSimplified;
     }
 
-    private void deleteFlyWayTable(List<TableSimplified> tablesSimplified) {
-        for (int i = 0; i < tablesSimplified.size(); i++) {
-            if (tablesSimplified.get(i).getTableName().equals("flyway_schema_history")) {
-                tablesSimplified.remove(i);
-                break;
+    private void removeCriticalTables(List<TableSimplified> tableSimplifiedList){
+        List<String> tempCriticalTables = new ArrayList<>(criticalTables);
+        for (int i = 0; i < tableSimplifiedList.size() && tempCriticalTables.size() > 0; i++) {
+            TableSimplified tableSimplified = tableSimplifiedList.get(i);
+            if(tempCriticalTables.contains(tableSimplified.getTableName())){
+                tempCriticalTables.remove(tableSimplified.getTableName());
+                tableSimplifiedList.remove(i);
+                i--;
             }
         }
     }

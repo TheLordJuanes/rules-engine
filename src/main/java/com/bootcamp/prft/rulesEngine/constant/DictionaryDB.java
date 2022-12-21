@@ -62,9 +62,11 @@ public class DictionaryDB {
         dictionary.put("text", TypeData.String);
         dictionary.put("time", TypeData.String);
         dictionary.put("time with time zone", TypeData.String);
+        dictionary.put("time without time zone", TypeData.String);
         dictionary.put("timetz", TypeData.String);
         dictionary.put("timestamp", TypeData.String);
         dictionary.put("timestamp with time zone", TypeData.String);
+        dictionary.put("timestamp without time zone", TypeData.String);
         dictionary.put("timestamptz", TypeData.String);
         dictionary.put("tsquery", TypeData.String);
         dictionary.put("tsvector", TypeData.String);

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
-
-    <include file="create_tatabro.xml" relativeToChangelogFile="true" />
-    <include file="create_users.xml" relativeToChangelogFile="true" />
+    <changeSet id="814e9a78-31c4-4ffb-8fda-679a7c528f23" author="juan.pablo" runOnChange="true">
+        <sqlFile path="create_users.sql"
+                 relativeToChangelogFile="true" splitStatements="false"/>
+    </changeSet>
 </databaseChangeLog>
