@@ -39,6 +39,7 @@ public class TableRepositoryPostgresqlImpl implements TableRepository {
 
     @Override
     public List<ColumnInformation> getInfoOfTableColumns(String tableName) {
+        tableName = tableName.toLowerCase();
         if(criticalTables.contains(tableName)){
             throw new RuleException(HttpStatus.UNAUTHORIZED, new RuleError(RuleErrorCode.CODE_05, RuleErrorCode.CODE_05.getMessage()));
         }
@@ -51,7 +52,7 @@ public class TableRepositoryPostgresqlImpl implements TableRepository {
         String[] expressions = new String[2];
         expressions[0] = "";
         expressions[1] = rule.getEncoded();
-        String tableName = rule.getTableName();
+        String tableName = rule.getTableName().toLowerCase();
         convertRuleToPostgresql(expressions, rule, tableName);
         String sql = "SELECT * FROM " + tableName + " WHERE " + expressions[0];
         List<ColumnInformation> columnsInformation = getInfoOfTableColumns(tableName);
@@ -198,7 +199,7 @@ public class TableRepositoryPostgresqlImpl implements TableRepository {
         List<String> tempCriticalTables = new ArrayList<>(criticalTables);
         for (int i = 0; i < tableSimplifiedList.size() && tempCriticalTables.size() > 0; i++) {
             TableSimplified tableSimplified = tableSimplifiedList.get(i);
-            if(tempCriticalTables.contains(tableSimplified.getTableName())){
+            if(tempCriticalTables.contains(tableSimplified.getTableName().toLowerCase())){
                 tempCriticalTables.remove(tableSimplified.getTableName());
                 tableSimplifiedList.remove(i);
                 i--;
@@ -207,6 +208,7 @@ public class TableRepositoryPostgresqlImpl implements TableRepository {
     }
 
     private String getTableForInsert(Row row, String tableName) {
+        tableName = tableName.toLowerCase();
         StringBuilder tableWithColumns = new StringBuilder(tableName + "(");
         List<RowCell> cells = row.getRow();
         for (int i = 0; i < cells.size()-1; i++) {
